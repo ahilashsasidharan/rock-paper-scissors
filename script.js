@@ -58,7 +58,7 @@ function playRound(playerSelection, computerSelection){
 function game(){
     let playerSelection,
         computerSelection,
-        result,
+        roundResult,
         playerScore = 0,
         computerScore = 0; 
     for (let i = 0; i < 5; i++){
@@ -69,12 +69,12 @@ function game(){
                 (playerSelection !== 'paper')
                 );
         computerSelection = computerPlay();
-        result = playRound(playerSelection, computerSelection);
-        if(result == 'win'){
+        roundResult = playRound(playerSelection, computerSelection);
+        if(roundResult == 'win'){
             console.log(`You Win! ${playerSelection} beats ${computerSelection}`);
             playerScore++;
         }
-        else if(result == 'loss'){
+        else if(roundResult == 'loss'){
             console.log(`You Lose! ${computerSelection} beats ${playerSelection}`);
             computerScore++;
         }
