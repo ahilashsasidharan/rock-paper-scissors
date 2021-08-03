@@ -57,41 +57,46 @@ function initializeGame(){
     let playerSelection,
         computerSelection,
         roundResult; 
-    
+
         const playerOptions = document.querySelectorAll('.player-option-btn');
 
         playerOptions.forEach((button) => {
-            button.addEventListener('click', function(){
+            button.addEventListener('click', function whenClicked(){
                 computerSelection = computerPlay();
                 playerSelection = button.textContent.toLowerCase();
                 roundResult = playRound(playerSelection, computerSelection);
-                updateScores(roundResult, playerSelection, computerSelection);
+                if(updateScores(roundResult, playerSelection, computerSelection)){
+                    button.removeEventListener('click', whenClicked);
+                }
             });
         });
-        
 }
    
 function updateScores(roundResult, playerSelection, computerSelection){
     const roundOutcome = document.querySelector('#round-result'),
         computerScoreDisplay = document.querySelector('#computer-score')
         playerScoreDisplay = document.querySelector('#player-score');
+
     let playerScore = 0, 
         computerScore = 0;
+
     if(roundResult == 'win'){
         roundOutcome.textContent = `You Win! ${playerSelection} beats ${computerSelection}`;
-        playerScore++;
+        playerScore = 1 + +playerScoreDisplay.textContent.slice(14);
         playerScoreDisplay.textContent = `Player Score: ${playerScore}`;
     }
     else if(roundResult == 'loss'){
         roundOutcome.textContent = `You Lose! ${computerSelection} beats ${playerSelection}`;
-        computerScore++;
+        computerScore = 1 + +computerScoreDisplay.textContent.slice(16);
         computerScoreDisplay.textContent = `Computer Score: ${computerScore}`;
     }
     else{
         roundOutcome.textContent = `You Tie! ${playerSelection} does not beat ${computerSelection}`;
     }  
  
-    if(computerScore == 5 ||  playerScore == 5){
-        roundOutcome.textContent = `Five rounds have been played. You tied with ${computerScore} losses and ${playerScore} wins`;
+    if((computerScore == 5) || (playerScore == 5)){
+        const playerOptions = document.querySelectorAll('.player-option-btn');
+        roundOutcome.textContent += `. Five rounds have been played. Refresh the page to play again.`;
+        return 1;
     }
 }

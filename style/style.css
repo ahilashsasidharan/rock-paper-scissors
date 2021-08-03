@@ -6,12 +6,19 @@
     border-radius: 10%;
 }
 
-.scores{
+.yellow-border{
     border: 2px; 
     border-color: yellow;
     border-style: solid;
     padding: 4px;
-    width: 50%; 
+}
+
+.scores{
+    width: 50%;
+}
+
+#round-result{
+    width: 100%;
 }
 
 #score-container{
